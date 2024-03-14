@@ -1,5 +1,7 @@
 import express from 'express';
-import { data } from './static.js';
+import { DATA } from './static.js';
+
+const data = { ...DATA };
 
 const PORT = process.env.PORT || 3000;
 

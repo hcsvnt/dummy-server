@@ -1,4 +1,4 @@
-export const data = [
+export const DATA = [
     {
         id: 2,
         label: 'New York',
@@ -98,4 +98,4 @@ export const data = [
         amount: 0,
         date_created: '2024-03-14 10:26:15',
     },
-];
+] as const;
