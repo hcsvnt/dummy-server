@@ -17,11 +17,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.send({ message: 'Hello World', data: data });
 });
 
-app.patch('/:id', (req, res) => {
+app.patch('/:id', async (req, res) => {
     const id = parseInt(req.params.id, 10); // Extract integer param
 
     const requestedItem = data.find((item) => item.id === id);
@@ -31,7 +31,7 @@ app.patch('/:id', (req, res) => {
         res.status(404).send('Item not found');
     }
 
-    const { label, description } = req.query;
+    const { label, description } = await req.json();
 
     const newItem = {
         ...requestedItem,
