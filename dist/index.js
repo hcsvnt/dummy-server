@@ -1,7 +1,7 @@
 import express from 'express';
 import { DATA } from './static.js';
 // THE DATABASE STONKS
-let data = [...DATA];
+let database = [...DATA];
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use((req, res, next) => {
@@ -12,15 +12,16 @@ app.use((req, res, next) => {
     next();
 });
 app.get('/', (req, res) => {
-    res.send({ message: 'Hello World', data: data });
+    res.send({ message: 'Hello World', data: database });
 });
 app.patch('/:id', (req, res) => {
     const id = parseInt(req.params.id, 10); // Extract integer param
-    const requestedItem = data.find((item) => item.id === id);
+    const requestedItem = database.find((item) => item.id === id);
     if (!requestedItem) {
         res.status(404).send('Item not found');
     }
-    const { label, description } = req.query;
+    const data = req.body;
+    const { label, description } = data;
     const itemIndex = data.findIndex((item) => item.id === id);
     const newItem = {
         ...requestedItem,
@@ -28,7 +29,7 @@ app.patch('/:id', (req, res) => {
         description: description || requestedItem.description,
     };
     const newData = data.splice(itemIndex, 1, newItem);
-    data = newData;
+    database = newData;
     res.send({
         message: 'Item updated',
         data: newItem,
