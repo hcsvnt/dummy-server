@@ -8,14 +8,8 @@ const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PUT, DELETE, OPTIONS'
-    );
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization, X-Requested-With'
-    );
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
 
     next();
 });
@@ -32,7 +26,7 @@ app.get('/', (req, res) => {
 app.patch('/:id', (req, res) => {
     const id = parseInt(req.params.id, 10); // Extract integer param
 
-    const requestedItem = data.find(item => item.id === id);
+    const requestedItem = data.find((item) => item.id === id);
 
     if (!requestedItem) {
         res.status(404).send('Item not found');
@@ -40,7 +34,7 @@ app.patch('/:id', (req, res) => {
 
     const { label, description } = req.body;
 
-    const itemIndex = data.findIndex(item => item.id === id);
+    const itemIndex = data.findIndex((item) => item.id === id);
 
     data[itemIndex] = {
         ...requestedItem,
@@ -51,11 +45,7 @@ app.patch('/:id', (req, res) => {
     res.send(
         JSON.stringify({
             message: 'Item updated',
-            data: {
-                ...requestedItem,
-                label,
-                description,
-            },
+            data: data[itemIndex],
         })
     );
 });
