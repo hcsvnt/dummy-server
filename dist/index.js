@@ -1,6 +1,7 @@
 import express from 'express';
 import { DATA } from './static.js';
-const data = [...DATA];
+// THE DATABASE STONKS
+let data = [...DATA];
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use((req, res, next) => {
@@ -21,14 +22,16 @@ app.patch('/:id', (req, res) => {
     }
     const { label, description } = req.query;
     const itemIndex = data.findIndex((item) => item.id === id);
-    data[itemIndex] = {
+    const newItem = {
         ...requestedItem,
         label: label || requestedItem.label,
         description: description || requestedItem.description,
     };
+    const newData = data.splice(itemIndex, 1, newItem);
+    data = newData;
     res.send({
         message: 'Item updated',
-        data: data[itemIndex],
+        data: newItem,
     });
 });
 // reply with html
