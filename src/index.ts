@@ -1,4 +1,3 @@
-// build a simple server
 import express from 'express';
 import { data } from './static.js';
 
