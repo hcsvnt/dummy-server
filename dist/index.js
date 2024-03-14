@@ -1,9 +1,11 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import { DATA } from './static.js';
 // THE DATABASE STONKS
 let data = [...DATA];
 const PORT = process.env.PORT || 3000;
 const app = express();
+app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, PATCH');
@@ -21,7 +23,7 @@ app.patch('/:id', async (req, res) => {
     if (!requestedItem) {
         res.status(404).send('Item not found');
     }
-    const { label, description } = await req.json();
+    const { label, description } = await req.body;
     const newItem = {
         ...requestedItem,
         label: label || 'not provided',
