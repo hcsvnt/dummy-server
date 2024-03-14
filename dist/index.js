@@ -29,8 +29,7 @@ app.patch('/:id', async (req, res) => {
         label: label || 'not provided',
         description: description || 'not provided',
     };
-    const newData = [...data.filter((item) => item.id !== id), newItem];
-    data = newData;
+    data.splice(itemIndex, 1, newItem);
     res.send({
         message: 'Item updated',
         data: newItem,
