@@ -1,4 +1,4 @@
-export const data = [
+export const DATA = [
     {
         id: 2,
         label: 'New York',
